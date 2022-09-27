@@ -11,7 +11,7 @@ class Estxsol extends Model
 	
     public $timestamps = true;
 
-    protected $table = 'estxsol';
+    protected $table = 'estxsols';
 
     protected $fillable = ['sucursal','solicitud','MuestraId','Depto','Estudio','Tomas','Faltantes','Importe','Estatus','Observaciones','Fecha','Imprimir','Tubo','abreviatura','TipoFormato','Noaplicadescuento','VerificadoPor','Publicado','WordPDF','Precio','Iva','ivaprct','descimpte','descprct','GrupoPerfil','EsPerfil','fecha_act','fecha_sync','flag_sucursales','eliminar','NombrePerfil','nombrepaciente'];
 	

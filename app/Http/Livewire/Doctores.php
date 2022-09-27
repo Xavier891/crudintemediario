@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Doctor;
+use App\Models\Doctore;
 
 class Doctores extends Component
 {
@@ -18,7 +18,7 @@ class Doctores extends Component
     {
 		$keyWord = '%'.$this->keyWord .'%';
         return view('livewire.doctores.view', [
-            'doctores' => Doctor::latest()
+            'doctores' => Doctore::latest()
 						->orWhere('sucursal', 'LIKE', $keyWord)
 						->orWhere('clave', 'LIKE', $keyWord)
 						->orWhere('doctor', 'LIKE', $keyWord)
@@ -51,43 +51,7 @@ class Doctores extends Component
 						->paginate(10),
         ]);
     }
-	public function render2()
-    {
-		$keyWord = '%'.$this->keyWord .'%';
-        return view('livewire.solicutds.view', [
-            'doctores' => Doctor::latest()
-						->orWhere('sucursal', 'LIKE', $keyWord)
-						->orWhere('clave', 'LIKE', $keyWord)
-						->orWhere('doctor', 'LIKE', $keyWord)
-						->orWhere('Paterno', 'LIKE', $keyWord)
-						->orWhere('Materno', 'LIKE', $keyWord)
-						->orWhere('Nombre', 'LIKE', $keyWord)
-						->orWhere('Direccion', 'LIKE', $keyWord)
-						->orWhere('Especialidad1', 'LIKE', $keyWord)
-						->orWhere('Especialidad2', 'LIKE', $keyWord)
-						->orWhere('Fec_alta', 'LIKE', $keyWord)
-						->orWhere('Pacientes_Mes', 'LIKE', $keyWord)
-						->orWhere('Pacientes_Acum', 'LIKE', $keyWord)
-						->orWhere('Importe_mes', 'LIKE', $keyWord)
-						->orWhere('Importe_Acum', 'LIKE', $keyWord)
-						->orWhere('Centro', 'LIKE', $keyWord)
-						->orWhere('Tels', 'LIKE', $keyWord)
-						->orWhere('Estado', 'LIKE', $keyWord)
-						->orWhere('Municipio', 'LIKE', $keyWord)
-						->orWhere('Localidad', 'LIKE', $keyWord)
-						->orWhere('cp', 'LIKE', $keyWord)
-						->orWhere('Colonia', 'LIKE', $keyWord)
-						->orWhere('fecha_act', 'LIKE', $keyWord)
-						->orWhere('fecha_sync', 'LIKE', $keyWord)
-						->orWhere('flag_sucursales', 'LIKE', $keyWord)
-						->orWhere('eliminar', 'LIKE', $keyWord)
-						->orWhere('CedProf', 'LIKE', $keyWord)
-						->orWhere('FecNac', 'LIKE', $keyWord)
-						->orWhere('Sexo', 'LIKE', $keyWord)
-						->orWhere('email', 'LIKE', $keyWord)
-						->paginate(10),
-        ]);
-    }
+	
     public function cancel()
     {
         $this->resetInput();
@@ -135,7 +99,7 @@ class Doctores extends Component
 		'eliminar' => 'required',
         ]);
 
-        Doctor::create([ 
+        Doctore::create([ 
 			'sucursal' => $this-> sucursal,
 			'clave' => $this-> clave,
 			'doctor' => $this-> doctor,
@@ -174,7 +138,7 @@ class Doctores extends Component
 
     public function edit($id)
     {
-        $record = Doctor::findOrFail($id);
+        $record = Doctore::findOrFail($id);
 
         $this->selected_id = $id; 
 		$this->sucursal = $record-> sucursal;
@@ -219,7 +183,7 @@ class Doctores extends Component
         ]);
 
         if ($this->selected_id) {
-			$record = Doctor::find($this->selected_id);
+			$record = Doctore::find($this->selected_id);
             $record->update([ 
 			'sucursal' => $this-> sucursal,
 			'clave' => $this-> clave,
@@ -261,7 +225,7 @@ class Doctores extends Component
     public function destroy($id)
     {
         if ($id) {
-            $record = Doctor::where('id', $id);
+            $record = Doctore::where('id', $id);
             $record->delete();
         }
     }

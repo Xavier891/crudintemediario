@@ -2,22 +2,26 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Http\Request;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Paciente;
+use App\Models\Empresa;
 
 class Pacientes extends Component
 {
     use WithPagination;
 
 	protected $paginationTheme = 'bootstrap';
-    public $selected_id, $keyWord, $id_paciente, $sucursal, $Clave, $Pacientes, $Paterno, $Materno, $Nombre, $FecNac, $Sexo, $Calle, $Numero, $Rfc, $Estudios, $Ult_solicitud, $Fec_alta, $Importe, $Importe_Acum, $Saldo, $EmpresaAnt, $suc_empresa, $Empresa, $Foraneo, $Descuento, $Titular, $Estado, $Municipio, $Localidad, $Cp, $Colonia, $Credencial, $NumCredencial, $Telefono, $NumEmpleado, $Pais, $cliente, $email, $fecha_act, $fecha_sync, $flag_sucursales, $eliminar, $enviarwhatsapp;
+    public $selected_id, $keyWord, $sucursal, $Clave, $Paciente, $Paterno, $Materno, $Nombre, $FecNac, $Sexo, $Calle, $Numero, $Rfc, $Estudios, $Ult_solicitud, $Fec_alta, $Importe, $Importe_Acum, $Saldo, $EmpresaAnt, $suc_empresa, $Empresa, $Foraneo, $Descuento, $Titular, $Estado, $Municipio, $Localidad, $Cp, $Colonia, $Credencial, $NumCredencial, $Telefono, $NumEmpleado, $Pais, $cliente, $email, $fecha_act, $fecha_sync, $flag_sucursales, $eliminar, $enviarwhatsapp;
     public $updateMode = false;
 
     public function render()
     {
+		$pacientes = Paciente::all();
+		$empresas = Empresa::all();
 		$keyWord = '%'.$this->keyWord .'%';
-        return view('livewire.pacientes.view', [
+        return view('livewire.pacientes.view', compact('empresas'),[
             'pacientes' => Paciente::latest()
 						->orWhere('sucursal', 'LIKE', $keyWord)
 						->orWhere('Clave', 'LIKE', $keyWord)
@@ -60,7 +64,7 @@ class Pacientes extends Component
 						->orWhere('eliminar', 'LIKE', $keyWord)
 						->orWhere('enviarwhatsapp', 'LIKE', $keyWord)
 						->paginate(10),
-        ]);
+        ])->with('pacientes',$pacientes);
     }
 	
     public function cancel()
@@ -113,17 +117,26 @@ class Pacientes extends Component
 		$this->enviarwhatsapp = null;
     }
 
-    public function store()
+	
+    public function store(Request $request)
     {
-        $this->validate([
-		'sucursal' => 'required',
-		'Clave' => 'required',
-		'suc_empresa' => 'required',
-		'eliminar' => 'required',
-		'enviarwhatsapp' => 'required',
-        ]);
-
+        // $this->validate([
+		// 'sucursal' => 'required',
+		// 'Clave' => 'required',
+		// 'suc_empresa' => 'required',
+		// 'Empresa' => 'required',
+		// 'eliminar' => 'required',
+		// 'enviarwhatsapp' => 'required',
+        // ]);
+		// $Pacientes = new Paciente();
+		// $Pacientes->sucursal = $request->get('sucursal');
+		// $Pacientes->Clave = $request->get('Clave');
+		// $Pacientes->Empresa = $request->get('Empresa');
+		// $Pacientes->suc_empresa = $request->get('suc_empresa');
+		// $Pacientes->eliminar = $request->get('eliminar');
+		// $Pacientes->enviarwhatsapp = $request->get('enviarwhatsapp');
         Paciente::create([ 
+			
 			'sucursal' => $this-> sucursal,
 			'Clave' => $this-> Clave,
 			'Paciente' => $this-> Paciente,
@@ -165,8 +178,9 @@ class Pacientes extends Component
 			'eliminar' => $this-> eliminar,
 			'enviarwhatsapp' => $this-> enviarwhatsapp
         ]);
-        
+		//$Pacientes->save();
         $this->resetInput();
+		
 		$this->emit('closeModal');
 		session()->flash('message', 'Paciente Successfully created.');
     }
@@ -226,6 +240,7 @@ class Pacientes extends Component
 		'sucursal' => 'required',
 		'Clave' => 'required',
 		'suc_empresa' => 'required',
+		'Empresa' => 'required',
 		'eliminar' => 'required',
 		'enviarwhatsapp' => 'required',
         ]);
