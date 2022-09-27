@@ -102,13 +102,6 @@ class Estxsols extends Component
         $this->validate([
 		'sucursal' => 'required',
 		'solicitud' => 'required',
-		'MuestraId' => 'required',
-		'Depto' => 'required',
-		'Estudio' => 'required',
-		'WordPDF' => 'required',
-		'GrupoPerfil' => 'required',
-		'EsPerfil' => 'required',
-		'eliminar' => 'required',
         ]);
 
         Estxsol::create([ 
@@ -197,13 +190,6 @@ class Estxsols extends Component
         $this->validate([
 		'sucursal' => 'required',
 		'solicitud' => 'required',
-		'MuestraId' => 'required',
-		'Depto' => 'required',
-		'Estudio' => 'required',
-		'WordPDF' => 'required',
-		'GrupoPerfil' => 'required',
-		'EsPerfil' => 'required',
-		'eliminar' => 'required',
         ]);
 
         if ($this->selected_id) {

@@ -11,9 +11,9 @@ class Solicitud extends Model
 	
     public $timestamps = true;
 
-    protected $table = 'solicituds';
+    protected $table = 'solicitud';
 
-    protected $fillable = ['Id','sucursal','Solicitud','Folio','suc_paciente','paciente','Fecha','suc_doctor','Doctor','suc_empresa','Empresa','Tipo_Pago','Fecha_Entrega','Anticipo','Expediente','Importe','Tipo_toma','Estatus','Descuento','Facturar_a','Fur','Total','porcentaje','Fecha_Entregado','Factura','NomCredencial','Pagos','NumImpResultados','SeFactura','Impreso','Edad','EdadTipo','Sexo','pase','tel','Estudios','VerificadoPor','condicionesdepago','numcta','SolPDF','procesar','fecha_act','fecha_sync','flag_sucursales','eliminar','subtotal','iva','retivaprct','retivaimpte','retisrprct','retisrimpte'];
+    protected $fillable = ['Id','sucursal','Solicitud','Folio','suc_paciente','paciente','Fecha','suc_doctor','Doctor','suc_empresa','Empresa','Tipo_Pago','Fecha_Entrega','Anticipo','Expediente','Importe','Tipo_toma','Estatus','Descuento','Facturar_a','Fur','Total','porcentaje','Fecha_Entregado','Factura','NomCredencial','Pagos','NumImpResultados','SeFactura','Impreso','Edad','EdadTipo','Sexo','pase','tel','Estudios','VerificadoPor','condicionesdepago','numcta','SolPDF','procesar','fecha_act','fecha_sync','flag_sucursales','eliminar','subtotal','iva','retivaprct','retivaimpte','retisrprct','retisrimpte','Hora_Toma','Notas','Hora_entrega','Diagnostico'];
 	
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

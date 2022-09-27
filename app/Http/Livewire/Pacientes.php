@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Illuminate\Http\Request;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Carbon\Carbon;
 use App\Models\Paciente;
 use App\Models\Empresa;
 
@@ -15,13 +16,16 @@ class Pacientes extends Component
 	protected $paginationTheme = 'bootstrap';
     public $selected_id, $keyWord, $sucursal, $Clave, $Paciente, $Paterno, $Materno, $Nombre, $FecNac, $Sexo, $Calle, $Numero, $Rfc, $Estudios, $Ult_solicitud, $Fec_alta, $Importe, $Importe_Acum, $Saldo, $EmpresaAnt, $suc_empresa, $Empresa, $Foraneo, $Descuento, $Titular, $Estado, $Municipio, $Localidad, $Cp, $Colonia, $Credencial, $NumCredencial, $Telefono, $NumEmpleado, $Pais, $cliente, $email, $fecha_act, $fecha_sync, $flag_sucursales, $eliminar, $enviarwhatsapp;
     public $updateMode = false;
+	public $dateFrom, $dateTo;
 
     public function render()
     {
+		$fechas = Paciente::whereDate('Fec_alta', '>=', now()->subDays(30))->get();
 		$pacientes = Paciente::all();
 		$empresas = Empresa::all();
+		$dateFrom = '%'.$this->dateFrom .'%';
 		$keyWord = '%'.$this->keyWord .'%';
-        return view('livewire.pacientes.view', compact('empresas'),[
+	return view('livewire.pacientes.view', compact('empresas'/*,'fechas'*/),[
             'pacientes' => Paciente::latest()
 						->orWhere('sucursal', 'LIKE', $keyWord)
 						->orWhere('Clave', 'LIKE', $keyWord)
@@ -63,10 +67,34 @@ class Pacientes extends Component
 						->orWhere('flag_sucursales', 'LIKE', $keyWord)
 						->orWhere('eliminar', 'LIKE', $keyWord)
 						->orWhere('enviarwhatsapp', 'LIKE', $keyWord)
+						->orWhere('created_at', 'LIKE', $keyWord)
+						->orWhere('updated_at', 'LIKE', $keyWord)
 						->paginate(10),
-        ])->with('pacientes',$pacientes);
+	]); /*,['pacientes' => Paciente::latest()->orWhere('created_at', 'LIKE', $dateFrom)]*/
     }
-	
+	public function sucursal(){
+
+	}
+	public function suc_empresa(){
+		
+	}
+	public function eliminar(){
+		
+	}
+	public function Clave(){
+		
+	}
+	public function Paciente(){
+		
+	}
+
+	public function Filtros(){
+		$from = Carbon::parse($this->dateFrom)->format('Y-m-d') . ' 00:00:00';
+		$to = Carbon::parse($this->dateTo)->format('Y-m-d') . ' 23:59:59';
+
+		$this->pacientes = Paciente::join()->whereBetween([$from, $to])->get();
+	}
+
     public function cancel()
     {
         $this->resetInput();
@@ -118,7 +146,7 @@ class Pacientes extends Component
     }
 
 	
-    public function store(Request $request)
+    public function store()
     {
         // $this->validate([
 		// 'sucursal' => 'required',
@@ -137,9 +165,9 @@ class Pacientes extends Component
 		// $Pacientes->enviarwhatsapp = $request->get('enviarwhatsapp');
         Paciente::create([ 
 			
-			'sucursal' => $this-> sucursal,
-			'Clave' => $this-> Clave,
-			'Paciente' => $this-> Paciente,
+			'sucursal' => '01',
+			'Clave' => '000001',
+			'Paciente' => '000001',
 			'Paterno' => $this-> Paterno,
 			'Materno' => $this-> Materno,
 			'Nombre' => $this-> Nombre,
@@ -150,12 +178,12 @@ class Pacientes extends Component
 			'Rfc' => $this-> Rfc,
 			'Estudios' => $this-> Estudios,
 			'Ult_solicitud' => $this-> Ult_solicitud,
-			'Fec_alta' => $this-> Fec_alta,
+			'Fec_alta' => '2022/09/26',
 			'Importe' => $this-> Importe,
 			'Importe_Acum' => $this-> Importe_Acum,
 			'Saldo' => $this-> Saldo,
 			'EmpresaAnt' => $this-> EmpresaAnt,
-			'suc_empresa' => $this-> suc_empresa,
+			'suc_empresa' => '01',
 			'Empresa' => $this-> Empresa,
 			'Foraneo' => $this-> Foraneo,
 			'Descuento' => $this-> Descuento,
@@ -175,7 +203,7 @@ class Pacientes extends Component
 			'fecha_act' => $this-> fecha_act,
 			'fecha_sync' => $this-> fecha_sync,
 			'flag_sucursales' => $this-> flag_sucursales,
-			'eliminar' => $this-> eliminar,
+			'eliminar' => 1111,
 			'enviarwhatsapp' => $this-> enviarwhatsapp
         ]);
 		//$Pacientes->save();
@@ -240,7 +268,6 @@ class Pacientes extends Component
 		'sucursal' => 'required',
 		'Clave' => 'required',
 		'suc_empresa' => 'required',
-		'Empresa' => 'required',
 		'eliminar' => 'required',
 		'enviarwhatsapp' => 'required',
         ]);
@@ -286,7 +313,7 @@ class Pacientes extends Component
 			'fecha_act' => $this-> fecha_act,
 			'fecha_sync' => $this-> fecha_sync,
 			'flag_sucursales' => $this-> flag_sucursales,
-			'eliminar' => $this-> eliminar,
+			'eliminar' => 7877,
 			'enviarwhatsapp' => $this-> enviarwhatsapp
             ]);
 
