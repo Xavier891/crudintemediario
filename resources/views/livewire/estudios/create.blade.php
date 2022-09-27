@@ -9,7 +9,7 @@
                 </button>
             </div>
            <div class="modal-body">
-				<form>
+				<form  method="POST">
             <div class="form-group">
                 <label for="Nombre"></label>
                 <input wire:model="Nombre" type="text" class="form-control" id="Nombre" placeholder="Nombre">@error('Nombre') <span class="error text-danger">{{ $message }}</span> @enderror

@@ -31,4 +31,8 @@
 	});
 </script>
 </body>
+<footer class="main-footer">
+            <div class="float-right d-none d-sm-block"><b>Versión</b> a.0.0.0.20210310</div>
+            <strong>©2022 <a href="https://www.inadware.com.mx/">Inadware de México, S. de R.L.</a></strong>
+        </footer>
 </html>
